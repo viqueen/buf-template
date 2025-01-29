@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option go_package = "api/go-sdk/todo/v1;todoV1";
+
+package todo.v1;
+
+import "todo/v1/todo_model.proto";
+
+service TodoService {
+  rpc CreateTodo (TodoRequest) returns (TodoResponse) {}
+}
+
+message TodoRequest {
+  string description = 1;
+}
+
+message TodoResponse {
+  Todo todo = 1;
+}

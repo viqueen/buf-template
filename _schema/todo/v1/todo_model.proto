@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option go_package = "api/go-sdk/todo/v1;todoV1";
+
+package todo.v1;
+
+message Todo {
+  string id = 1;
+  string description = 2;
+}
