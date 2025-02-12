@@ -6,3 +6,6 @@ plugins:
   - local: protoc-gen-connect-go
     out: api/go-sdk
     opt: paths=source_relative
+
+inputs:
+  - directory: _schema/protos

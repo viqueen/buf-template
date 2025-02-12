@@ -1,1 +1,4 @@
 api/**/*.go
+backend/internal/store/gendb/*.go
+.local-env
+.DS_Store

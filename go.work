@@ -1,3 +1,6 @@
 go 1.23.4
 
-use ./api/go-sdk
+use (
+	./api/go-sdk
+	./backend
+)

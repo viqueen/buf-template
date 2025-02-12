@@ -1,0 +1,18 @@
+networks:
+  todo_network:
+    driver: bridge
+    name: todo_network
+
+services:
+  database:
+    image: postgres:16-alpine
+    networks:
+      - todo_network
+    environment:
+      POSTGRES_USER: todo
+      POSTGRES_PASSWORD: todo
+      POSTGRES_DB: todo
+    ports:
+      - "5432:5432"
+    volumes:
+      - ../.local-env/database:/var/lib/postgresql/data

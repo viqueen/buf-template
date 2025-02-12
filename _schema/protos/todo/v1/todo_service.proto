@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+option go_package = "api/go-sdk/todo/v1;todoV1";
+
+package todo.v1;
+
+import "todo/v1/todo_model.proto";
+
+service TodoService {
+  rpc CreateTodo (CreateTodoRequest) returns (CreateTodoResponse) {}
+  rpc GetTodo (GetTodoRequest) returns (GetTodoResponse) {}
+  rpc ListTodos (ListTodosRequest) returns (ListTodosResponse) {}
+}
+
+message CreateTodoRequest {
+  string description = 1;
+}
+
+message CreateTodoResponse {
+  Todo todo = 1;
+}
+
+message GetTodoRequest {
+  string id = 1;
+}
+
+message GetTodoResponse {
+  Todo todo = 1;
+}
+
+message ListTodosRequest {
+  int32 page_limit = 1;
+  int32 page_offset = 2;
+}
+
+message ListTodosResponse {
+  repeated Todo todos = 1;
+  int32 next_page_offset = 2;
+  bool has_more = 3;
+}
