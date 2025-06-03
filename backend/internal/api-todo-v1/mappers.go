@@ -1,22 +1,24 @@
 package api_todo_v1
 
 import (
-	todoV1 "api/go-sdk/todo/v1"
-	"backend/internal/store/gendb"
-	"connectrpc.com/connect"
 	"database/sql"
 	"errors"
+	"fmt"
+
+	"connectrpc.com/connect"
+	todoV1 "github.com/viqueen/buf-template/api/go-sdk/todo/v1"
+	"github.com/viqueen/buf-template/backend/internal/store/gendb"
 )
 
-func dbErrorToApi(err error, msg string) *connect.Error {
+func dbErrorToAPI(err error, msg string) *connect.Error {
 	if errors.Is(err, sql.ErrNoRows) {
 		return connect.NewError(connect.CodeNotFound, err)
 	}
-	wrapped := errors.Join(errors.New(msg), err)
-	return connect.NewError(connect.CodeInternal, wrapped)
+
+	return connect.NewError(connect.CodeInternal, fmt.Errorf("%s: %w", msg, err))
 }
 
-func dbTodoToApi(todo *gendb.Todo) *todoV1.Todo {
+func dbTodoToAPI(todo *gendb.Todo) *todoV1.Todo {
 	return &todoV1.Todo{
 		Id:          todo.ID.String(),
 		Description: todo.Description,
@@ -27,5 +29,6 @@ func nonZeroOrDefaultInt32(i int32, def int32) int32 {
 	if i == 0 {
 		return def
 	}
+
 	return i
 }

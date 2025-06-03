@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "api/go-sdk/todo/v1;todoV1";
+option go_package = "github.com/viqueen/buf-template/api/go-sdk/todo/v1;todoV1";
 
 package todo.v1;
 

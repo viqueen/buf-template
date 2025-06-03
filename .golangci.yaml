@@ -1,0 +1,28 @@
+version: "2"
+
+formatters:
+  enable:
+    - gofmt
+    - goimports
+    - golines
+
+linters:
+  default: "all"
+  disable:
+    - revive
+    - exhaustruct
+    - ireturn
+  settings:
+    depguard:
+      rules:
+        main:
+          allow:
+            - $gostd
+            - github.com/viqueen/buf-template
+            - connectrpc.com/connect
+            - connectrpc.com/cors
+            - connectrpc.com/otelconnect
+            - github.com/lib/pq
+            - github.com/rs/cors
+            - golang.org/x/net/http2
+            - github.com/gofrs/uuid

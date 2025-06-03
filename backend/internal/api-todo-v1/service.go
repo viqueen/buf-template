@@ -1,13 +1,13 @@
 package api_todo_v1
 
 import (
-	v1 "api/go-sdk/todo/v1"
-	"api/go-sdk/todo/v1/todoV1connect"
-	"backend/internal/store/gendb"
-	connect "connectrpc.com/connect"
 	"context"
-	"errors"
+
+	"connectrpc.com/connect"
 	"github.com/gofrs/uuid"
+	todoV1 "github.com/viqueen/buf-template/api/go-sdk/todo/v1"
+	"github.com/viqueen/buf-template/api/go-sdk/todo/v1/todoV1connect"
+	"github.com/viqueen/buf-template/backend/internal/store/gendb"
 )
 
 type todoService struct {
@@ -20,48 +20,65 @@ func NewTodoService(store gendb.Querier) todoV1connect.TodoServiceHandler {
 	}
 }
 
-func (t todoService) CreateTodo(ctx context.Context, c *connect.Request[v1.CreateTodoRequest]) (*connect.Response[v1.CreateTodoResponse], error) {
+func (t todoService) CreateTodo(
+	ctx context.Context,
+	request *connect.Request[todoV1.CreateTodoRequest],
+) (*connect.Response[todoV1.CreateTodoResponse], error) {
 	id := uuid.Must(uuid.NewV4())
+
 	created, err := t.store.CreateTodo(ctx, &gendb.CreateTodoParams{
 		ID:          id,
-		Description: c.Msg.GetDescription(),
+		Description: request.Msg.GetDescription(),
 	})
 	if err != nil {
-		return nil, dbErrorToApi(err, "failed to create todo")
+		return nil, dbErrorToAPI(err, "failed to create todo")
 	}
-	return connect.NewResponse(&v1.CreateTodoResponse{
-		Todo: dbTodoToApi(created),
-	}), nil
 
+	return connect.NewResponse(&todoV1.CreateTodoResponse{
+		Todo: dbTodoToAPI(created),
+	}), nil
 }
 
-func (t todoService) GetTodo(ctx context.Context, c *connect.Request[v1.GetTodoRequest]) (*connect.Response[v1.GetTodoResponse], error) {
-	id := uuid.FromStringOrNil(c.Msg.GetId())
-	if id.IsNil() {
-		return nil, connect.NewError(connect.CodeInvalidArgument, errors.New("invalid id"))
+func (t todoService) GetTodo(
+	ctx context.Context,
+	request *connect.Request[todoV1.GetTodoRequest],
+) (*connect.Response[todoV1.GetTodoResponse], error) {
+	identifier := uuid.FromStringOrNil(request.Msg.GetId())
+	if identifier.IsNil() {
+		return nil, connect.NewError(
+			connect.CodeInvalidArgument,
+			ErrInvalidTodoID,
+		)
 	}
-	found, err := t.store.GetTodo(ctx, id)
+
+	found, err := t.store.GetTodo(ctx, identifier)
 	if err != nil {
-		return nil, dbErrorToApi(err, "failed to get todo")
+		return nil, dbErrorToAPI(err, "failed to get todo")
 	}
-	return connect.NewResponse(&v1.GetTodoResponse{
-		Todo: dbTodoToApi(found),
+
+	return connect.NewResponse(&todoV1.GetTodoResponse{
+		Todo: dbTodoToAPI(found),
 	}), nil
 }
 
-func (t todoService) ListTodos(ctx context.Context, c *connect.Request[v1.ListTodosRequest]) (*connect.Response[v1.ListTodosResponse], error) {
+func (t todoService) ListTodos(
+	ctx context.Context,
+	request *connect.Request[todoV1.ListTodosRequest],
+) (*connect.Response[todoV1.ListTodosResponse], error) {
 	todos, err := t.store.ListTodos(ctx, &gendb.ListTodosParams{
-		PageLimit:  nonZeroOrDefaultInt32(c.Msg.GetPageLimit(), 10),
-		PageOffset: c.Msg.GetPageOffset(),
+		PageLimit:  nonZeroOrDefaultInt32(request.Msg.GetPageLimit(), PageLimitDefault),
+		PageOffset: request.Msg.GetPageOffset(),
 	})
 	if err != nil {
-		return nil, dbErrorToApi(err, "failed to list todos")
+		return nil, dbErrorToAPI(err, "failed to list todos")
 	}
-	var apiTodos []*v1.Todo
-	for _, todo := range todos {
-		apiTodos = append(apiTodos, dbTodoToApi(todo))
+
+	apiTodos := make([]*todoV1.Todo, 0, len(todos))
+	for index, todo := range todos {
+		apiTodos[index] = dbTodoToAPI(todo)
 	}
-	return connect.NewResponse(&v1.ListTodosResponse{
+
+	return connect.NewResponse(&todoV1.ListTodosResponse{
 		Todos: apiTodos,
 	}), nil
 }

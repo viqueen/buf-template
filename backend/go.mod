@@ -1,4 +1,4 @@
-module backend
+module github.com/viqueen/buf-template/backend
 
 go 1.23.4
 
