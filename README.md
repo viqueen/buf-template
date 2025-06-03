@@ -1,15 +1,24 @@
-## buf-template
+# buf-template
 
-- This is a template for using the [buf](https://buf.build) build system. 
-- It includes codegen for Go with Connect rpc.
+This is a template for using the [buf](https://buf.build) build system to define APIs and
+implement them with Go using Connect rpc framework.
 
-### development setup
+## setup
 
-- start harness
+### environment
 
 ```bash
-make harness-up
+make monitoring-up
 ```
+
+- open grafana at http://localhost:3000 and login with `admin`/`admin`
+- open prometheus at http://localhost:9090
+
+```bash
+make stack-up
+```
+
+### backend
 
 - run sql migrations with flyway
 
