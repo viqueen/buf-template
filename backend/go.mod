@@ -4,7 +4,7 @@ go 1.23.4
 
 require (
 	connectrpc.com/cors v0.1.0
-	connectrpc.com/otelconnect v0.7.1
+	connectrpc.com/otelconnect v0.7.2
 	github.com/gofrs/uuid v4.4.0+incompatible
 	github.com/lib/pq v1.10.9
 	github.com/rs/cors v1.11.1
