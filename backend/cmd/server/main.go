@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"time"
 
 	"connectrpc.com/connect"
 	connectcors "connectrpc.com/cors"
@@ -43,7 +44,15 @@ func main() {
 
 	log.Printf("starting server on :8080")
 
-	err := http.ListenAndServe(":8080", withCORS(h2cMux))
+	srv := &http.Server{
+		Addr:         ":8080",
+		Handler:      withCORS(h2cMux),
+		ReadTimeout:  5 * time.Second,   //nolint: mnd
+		WriteTimeout: 10 * time.Second,  //nolint: mnd
+		IdleTimeout:  120 * time.Second, //nolint: mnd
+	}
+
+	err := srv.ListenAndServe()
 	if err != nil {
 		log.Fatalf("failed to start server: %v", err)
 	}

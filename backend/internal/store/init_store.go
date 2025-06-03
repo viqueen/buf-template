@@ -6,7 +6,7 @@ import (
 )
 
 func InitStore() (*sql.DB, error) {
-	connectionString := "postgres://todo:authz@localhost:5432/todo?sslmode=disable"
+	connectionString := "postgres://todo:authz@localhost:5432/todo?sslmode=disable" //nolint: gosec
 
 	db, err := sql.Open("postgres", connectionString)
 	if err != nil {

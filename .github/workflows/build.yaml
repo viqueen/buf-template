@@ -26,7 +26,6 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: 1.23
-      - uses: golangci/golangci-lint-action@v8
-        with:
-          version: v2.1.2
-          working-directory: backend
+      - run: make lint
+        env:
+          CI: true
