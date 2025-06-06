@@ -5,7 +5,7 @@ networks:
 
 services:
   database:
-    image: postgres:16-alpine
+    image: postgres:17-alpine
     networks:
       - todo_network
     environment:
