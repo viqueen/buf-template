@@ -8,7 +8,7 @@ require (
 	github.com/gofrs/uuid v4.4.0+incompatible
 	github.com/lib/pq v1.10.9
 	github.com/rs/cors v1.11.1
-	golang.org/x/net v0.35.0
+	golang.org/x/net v0.41.0
 )
 
 require (
