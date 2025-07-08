@@ -3,7 +3,22 @@
 This is a template for using the [buf](https://buf.build) build system to define APIs and
 implement them with Go using Connect rpc framework.
 
-## setup
+## development
+
+### setup
+
+- install dependencies
+
+```bash
+nvm install
+npm ci
+```
+
+- invite claude
+
+```bash
+npm run claude
+```
 
 ### environment
 
