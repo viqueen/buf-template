@@ -15,8 +15,14 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: 1.23
-      - run: make codegen
-      - run: make sqlc
+      - run: make api-codegen
+      - run: make sqlc-codegen
       - run: make lint
+        env:
+          CI: true
+      - run: npm run lint
+        env:
+          CI: true
+      - run: npm run build
         env:
           CI: true

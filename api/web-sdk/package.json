@@ -6,7 +6,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "build:watch": "tsc -w"
+    "build:watch": "tsc -w",
+    "lint": "echo 'generated code does not require linting'"
   },
   "dependencies": {
     "@bufbuild/protobuf": "^2.6.0"
