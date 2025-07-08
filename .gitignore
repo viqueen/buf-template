@@ -1,4 +1,13 @@
+# codegen:ignore
 api/**/*.go
+api/**/*.ts
+
 backend/internal/store/gendb/*.go
+
+# local environment files
 .local-env
 .DS_Store
+
+# dependencies and build outputs
+node_modules/
+dist/
