@@ -1,6 +1,6 @@
 version: v2
 modules:
-  - path: _schema/protos
+  - path: protos
 lint:
   use:
     - STANDARD

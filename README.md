@@ -29,17 +29,25 @@ make migrations
 - run api codegen
 
 ```bash
-make codegen
+make api-codegen
 ```
 
 - run sqlc codegen
 
 ```bash
-make sqlc
+make sqlc-codegen
 ```
 
 - run backend server
 
 ```bash
 make run-backend-server
+```
+
+### frontend
+
+- run frontend server
+
+```bash
+npm run frontend:dev
 ```
