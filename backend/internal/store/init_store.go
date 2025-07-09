@@ -15,5 +15,11 @@ func InitStore() (*gorm.DB, error) {
 		return nil, fmt.Errorf("failed to open database connection: %w", err)
 	}
 
+	// Auto-migrate the schema
+	err = db.AutoMigrate(&Todo{})
+	if err != nil {
+		return nil, fmt.Errorf("failed to auto-migrate database schema: %w", err)
+	}
+
 	return db, nil
 }
