@@ -21,8 +21,4 @@ type Repository[T any] interface {
 
 type TodoRepositoryInterface interface {
 	Repository[Todo]
-	// Legacy methods for backward compatibility
-	CreateTodo(ctx context.Context, todo *Todo) error
-	GetTodo(ctx context.Context, id uuid.UUID) (*Todo, error)
-	ListTodos(ctx context.Context, limit, offset int32) ([]*Todo, error)
 }

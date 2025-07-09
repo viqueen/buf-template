@@ -20,7 +20,7 @@ func (t todoService) GetTodo(
 		)
 	}
 
-	found, err := t.repo.GetTodo(ctx, identifier)
+	found, err := t.repo.GetByID(ctx, identifier)
 	if err != nil {
 		return nil, dbErrorToAPI(err, "failed to get todo")
 	}
