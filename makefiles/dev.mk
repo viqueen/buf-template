@@ -19,19 +19,6 @@ stack-down:
 	@docker-compose -f _harness/stack/docker-compose.yaml down
 
 
-.PHONY: migrations
-migrations:
-	@echo "flyway..."
-	@docker run --rm \
-		--network="todo_network" \
-		--volume $(PWD)/backend/data/schema:/flyway/backend/data/schema \
-		flyway/flyway:7.2.0-alpine \
-			-url="jdbc:postgresql://database:5432/todo" \
-			-user="todo" -password="todo" \
-			-schemas="public" -defaultSchema="public" \
-			-locations=filesystem:/flyway/backend/data/schema \
-			migrate info
-
 .PHONY: run-backend-server
 run-backend-server:
 	@echo "Running backend server..."
