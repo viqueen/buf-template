@@ -20,7 +20,7 @@ func (t todoService) CreateTodo(
 		Description: request.Msg.GetDescription(),
 	}
 
-	err := t.repo.CreateTodo(todo)
+	err := t.repo.CreateTodo(ctx, todo)
 	if err != nil {
 		return nil, dbErrorToAPI(err, "failed to create todo")
 	}

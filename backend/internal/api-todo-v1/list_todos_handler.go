@@ -12,6 +12,7 @@ func (t todoService) ListTodos(
 	request *connect.Request[todoV1.ListTodosRequest],
 ) (*connect.Response[todoV1.ListTodosResponse], error) {
 	todos, err := t.repo.ListTodos(
+		ctx,
 		nonZeroOrDefaultInt32(request.Msg.GetPageLimit(), PageLimitDefault),
 		request.Msg.GetPageOffset(),
 	)
