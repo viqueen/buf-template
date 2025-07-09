@@ -3,6 +3,7 @@ api/**/*.go
 api/**/*.ts
 
 backend/internal/store/gendb/*.go
+backend/server
 
 # local environment files
 .local-env
