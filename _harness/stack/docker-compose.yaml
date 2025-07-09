@@ -15,4 +15,4 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ../.local-env/database:/var/lib/postgresql/data
+      - ../../.local-env/database:/var/lib/postgresql/data
