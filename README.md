@@ -14,6 +14,12 @@ nvm install
 npm ci
 ```
 
+- run api codegen
+
+```bash
+make api-codegen
+```
+
 - invite claude
 
 ```bash
@@ -34,24 +40,6 @@ make stack-up
 ```
 
 ### backend
-
-- run sql migrations with flyway
-
-```bash
-make migrations
-```
-
-- run api codegen
-
-```bash
-make api-codegen
-```
-
-- run sqlc codegen
-
-```bash
-make sqlc-codegen
-```
 
 - run backend server
 
