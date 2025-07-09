@@ -6,10 +6,10 @@ import (
 )
 
 type todoService struct {
-	repo store.TodoRepositoryInterface
+	repo store.Repository[store.Todo]
 }
 
-func NewTodoService(repo store.TodoRepositoryInterface) todoV1connect.TodoServiceHandler {
+func NewTodoService(repo store.Repository[store.Todo]) todoV1connect.TodoServiceHandler {
 	return &todoService{
 		repo: repo,
 	}

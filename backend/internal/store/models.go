@@ -20,7 +20,7 @@ type todoRepository struct {
 	db *gorm.DB
 }
 
-func NewTodoRepository(db *gorm.DB) TodoRepositoryInterface {
+func NewTodoRepository(db *gorm.DB) Repository[Todo] {
 	return &todoRepository{db: db}
 }
 
