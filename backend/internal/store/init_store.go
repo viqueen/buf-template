@@ -8,7 +8,7 @@ import (
 )
 
 func InitStore() (*gorm.DB, error) {
-	connectionString := "postgres://todo:authz@localhost:5432/todo?sslmode=disable" //nolint: gosec
+	connectionString := "postgres://todo:todo@localhost:5432/todo?sslmode=disable" //nolint: gosec
 
 	db, err := gorm.Open(postgres.Open(connectionString), &gorm.Config{})
 	if err != nil {
