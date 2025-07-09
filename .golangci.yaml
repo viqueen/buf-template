@@ -19,10 +19,12 @@ linters:
           allow:
             - $gostd
             - github.com/viqueen/buf-template
+            - gorm.io/driver/postgres
+            - gorm.io/gorm
             - connectrpc.com/connect
             - connectrpc.com/cors
             - connectrpc.com/otelconnect
-            - github.com/lib/pq
-            - github.com/rs/cors
-            - golang.org/x/net/http2
             - github.com/gofrs/uuid
+            - golang.org/x/net/http2
+            - golang.org/x/net/http2/h2c
+            - github.com/rs/cors
