@@ -1,14 +1,16 @@
 package store
 
 import (
-	"database/sql"
 	"fmt"
+
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
-func InitStore() (*sql.DB, error) {
+func InitStore() (*gorm.DB, error) {
 	connectionString := "postgres://todo:authz@localhost:5432/todo?sslmode=disable" //nolint: gosec
 
-	db, err := sql.Open("postgres", connectionString)
+	db, err := gorm.Open(postgres.Open(connectionString), &gorm.Config{})
 	if err != nil {
 		return nil, fmt.Errorf("failed to open database connection: %w", err)
 	}

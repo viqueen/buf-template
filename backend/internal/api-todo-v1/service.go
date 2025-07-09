@@ -7,16 +7,16 @@ import (
 	"github.com/gofrs/uuid"
 	todoV1 "github.com/viqueen/buf-template/api/go-sdk/todo/v1"
 	"github.com/viqueen/buf-template/api/go-sdk/todo/v1/todoV1connect"
-	"github.com/viqueen/buf-template/backend/internal/store/gendb"
+	"github.com/viqueen/buf-template/backend/internal/store"
 )
 
 type todoService struct {
-	store gendb.Querier
+	repo *store.TodoRepository
 }
 
-func NewTodoService(store gendb.Querier) todoV1connect.TodoServiceHandler {
+func NewTodoService(repo *store.TodoRepository) todoV1connect.TodoServiceHandler {
 	return &todoService{
-		store: store,
+		repo: repo,
 	}
 }
 
@@ -26,16 +26,18 @@ func (t todoService) CreateTodo(
 ) (*connect.Response[todoV1.CreateTodoResponse], error) {
 	id := uuid.Must(uuid.NewV4())
 
-	created, err := t.store.CreateTodo(ctx, &gendb.CreateTodoParams{
+	todo := &store.Todo{
 		ID:          id,
 		Description: request.Msg.GetDescription(),
-	})
+	}
+
+	err := t.repo.CreateTodo(todo)
 	if err != nil {
 		return nil, dbErrorToAPI(err, "failed to create todo")
 	}
 
 	return connect.NewResponse(&todoV1.CreateTodoResponse{
-		Todo: dbTodoToAPI(created),
+		Todo: dbTodoToAPI(todo),
 	}), nil
 }
 
@@ -51,7 +53,7 @@ func (t todoService) GetTodo(
 		)
 	}
 
-	found, err := t.store.GetTodo(ctx, identifier)
+	found, err := t.repo.GetTodo(identifier)
 	if err != nil {
 		return nil, dbErrorToAPI(err, "failed to get todo")
 	}
@@ -65,10 +67,10 @@ func (t todoService) ListTodos(
 	ctx context.Context,
 	request *connect.Request[todoV1.ListTodosRequest],
 ) (*connect.Response[todoV1.ListTodosResponse], error) {
-	todos, err := t.store.ListTodos(ctx, &gendb.ListTodosParams{
-		PageLimit:  nonZeroOrDefaultInt32(request.Msg.GetPageLimit(), PageLimitDefault),
-		PageOffset: request.Msg.GetPageOffset(),
-	})
+	todos, err := t.repo.ListTodos(
+		nonZeroOrDefaultInt32(request.Msg.GetPageLimit(), PageLimitDefault),
+		request.Msg.GetPageOffset(),
+	)
 	if err != nil {
 		return nil, dbErrorToAPI(err, "failed to list todos")
 	}

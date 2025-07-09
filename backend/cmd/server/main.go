@@ -8,12 +8,10 @@ import (
 	"connectrpc.com/connect"
 	connectcors "connectrpc.com/cors"
 	"connectrpc.com/otelconnect"
-	_ "github.com/lib/pq"
 	"github.com/rs/cors"
 	"github.com/viqueen/buf-template/api/go-sdk/todo/v1/todoV1connect"
 	apitodov1 "github.com/viqueen/buf-template/backend/internal/api-todo-v1"
 	"github.com/viqueen/buf-template/backend/internal/store"
-	"github.com/viqueen/buf-template/backend/internal/store/gendb"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
 )
@@ -29,9 +27,9 @@ func main() {
 		log.Fatalf("failed to initialise db: %v", dbErr)
 	}
 
-	dataStore := gendb.New(db)
+	todoRepo := store.NewTodoRepository(db)
 
-	todoService := apitodov1.NewTodoService(dataStore)
+	todoService := apitodov1.NewTodoService(todoRepo)
 	todoPath, todoHandler := todoV1connect.NewTodoServiceHandler(
 		todoService,
 		connect.WithInterceptors(otelInterceptor),
