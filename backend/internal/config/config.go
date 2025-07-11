@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"net"
 	"os"
 	"strings"
 )
@@ -40,17 +41,21 @@ func Load() *Config {
 
 func (c *Config) IsDevelopment() bool {
 	env := strings.ToLower(c.Environment)
+
 	return env == "development" || env == "dev"
 }
 
 func (d *DatabaseConfig) ConnectionString() string {
-	return fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=%s",
-		d.User, d.Password, d.Host, d.Port, d.Name, d.SSLMode)
+	target := net.JoinHostPort(d.Host, d.Port)
+
+	return fmt.Sprintf("postgres://%s:%s@%s/%s?sslmode=%s",
+		d.User, d.Password, target, d.Name, d.SSLMode)
 }
 
 func getEnvWithDefault(key, defaultValue string) string {
 	if value := os.Getenv(key); value != "" {
 		return value
 	}
+
 	return defaultValue
 }

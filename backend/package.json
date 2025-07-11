@@ -5,6 +5,7 @@
   "scripts": {
     "build": "echo 'skipping build step for schema'",
     "lint": "./bin/lint.sh",
+    "lint:fix": "./bin/lint.sh --fix",
     "start": "modd",
     "debug": "modd -f ./modd-debug.conf"
   },

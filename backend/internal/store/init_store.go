@@ -3,9 +3,9 @@ package store
 import (
 	"fmt"
 
+	"github.com/viqueen/buf-template/backend/internal/config"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"github.com/viqueen/buf-template/backend/internal/config"
 )
 
 func InitStore(cfg *config.Config) (*gorm.DB, error) {

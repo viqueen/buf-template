@@ -18,6 +18,7 @@ func (t todoService) GetTodo(
 		log.Warn().
 			Str("provided_id", request.Msg.GetId()).
 			Msg("invalid todo ID provided")
+
 		return nil, connect.NewError(
 			connect.CodeInvalidArgument,
 			ErrInvalidTodoID,
@@ -34,6 +35,7 @@ func (t todoService) GetTodo(
 			Err(err).
 			Str("todo_id", identifier.String()).
 			Msg("failed to get todo")
+
 		return nil, dbErrorToAPI(err, "failed to get todo")
 	}
 

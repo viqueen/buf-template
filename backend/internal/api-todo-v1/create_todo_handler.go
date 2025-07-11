@@ -32,6 +32,7 @@ func (t todoService) CreateTodo(
 			Err(err).
 			Str("todo_id", id.String()).
 			Msg("failed to create todo")
+
 		return nil, dbErrorToAPI(err, "failed to create todo")
 	}
 

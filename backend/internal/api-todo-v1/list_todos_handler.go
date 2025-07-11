@@ -31,6 +31,7 @@ func (t todoService) ListTodos(
 			Int32("limit", limit).
 			Int32("offset", offset).
 			Msg("failed to list todos")
+
 		return nil, dbErrorToAPI(err, "failed to list todos")
 	}
 

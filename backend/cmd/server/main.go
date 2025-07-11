@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 
@@ -46,7 +45,7 @@ func main() {
 
 	h2cMux := h2c.NewHandler(mux, &http2.Server{})
 
-	serverAddr := fmt.Sprintf(":%s", cfg.ServerPort)
+	serverAddr := ":" + cfg.ServerPort
 	log.Info().Str("addr", serverAddr).Msg("starting server")
 
 	srv := &http.Server{

@@ -12,6 +12,8 @@ linters:
     - revive
     - exhaustruct
     - ireturn
+    - varnamelen
+    - gomoddirectives
   settings:
     depguard:
       rules:
@@ -28,3 +30,4 @@ linters:
             - golang.org/x/net/http2
             - golang.org/x/net/http2/h2c
             - github.com/rs/cors
+            - github.com/rs/zerolog
