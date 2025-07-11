@@ -28,7 +28,10 @@ _export_module() {
      target="${BASH_REMATCH[1]}"
      module_name=${BASH_REMATCH[2]}
      export_as=$( _transform_string "${module_name}" )
-     echo "export * as ${export_as} from \"./${module_name}\";" >> "${target}"/index.ts
+     # Ensure the index.ts file exists and is writable
+     touch "${target}/index.ts"
+     chmod +w "${target}/index.ts"
+     echo "export * as ${export_as} from \"./${module_name}\";" >> "${target}/index.ts"
    fi
   done
 }
