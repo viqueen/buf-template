@@ -12,13 +12,14 @@
   ],
   "scripts": {
     "claude": "claude",
-    "harness": "npm run --workspace @labset/harness",
-    "schema": "npm run --workspace @labset/schema",
+    "harness": "npm run --workspace @labset/buf-template-harness",
+    "schema": "npm run --workspace @labset/buf-template-schema",
     "backend": "npm run --workspace @labset/buf-template-backend",
-    "frontend:dev": "npm run dev --workspace @labset/buf-template-frontend",
+    "frontend": "npm run --workspace @labset/buf-template-frontend",
     "build": "npm run build --workspaces",
     "lint": "npm run lint --workspaces",
-    "format": "prettier --write frontend/"
+    "format": "prettier --write frontend/",
+    "format:check": "prettier --check frontend/"
   },
   "devDependencies": {
     "@anthropic-ai/claude-code": "^1.0.44",

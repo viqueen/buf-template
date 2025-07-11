@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "echo 'skipping build step for schema'",
+    "build": "echo 'skipping build step for backend'",
     "lint": "./bin/lint.sh",
     "lint:fix": "./bin/lint.sh --fix",
     "start": "modd",
