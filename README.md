@@ -17,7 +17,7 @@ npm ci
 - run api codegen
 
 ```bash
-make api-codegen
+npm run schema codegen
 ```
 
 - invite claude
@@ -29,14 +29,14 @@ npm run claude
 ### environment
 
 ```bash
-make monitoring-up
+npm run harness start-monitoring
 ```
 
 - open grafana at http://localhost:3000 and login with `admin`/`admin`
 - open prometheus at http://localhost:9090
 
 ```bash
-make stack-up
+npm run harness start-stack
 ```
 
 ### backend
@@ -44,7 +44,7 @@ make stack-up
 - run backend server
 
 ```bash
-make run-backend-server
+npm run backend start
 ```
 
 ### frontend
@@ -52,5 +52,5 @@ make run-backend-server
 - run frontend server
 
 ```bash
-npm run frontend:dev
+npm run frontend dev
 ```
