@@ -6,16 +6,17 @@ import (
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
+	"github.com/viqueen/buf-template/backend/internal/config"
 )
 
-func Init() {
+func Init(cfg *config.Config) {
 	// Configure zerolog with pretty output for development
-	if isDevelopment() {
+	if cfg.IsDevelopment() {
 		log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 	}
 
-	// Set log level from environment variable
-	level := strings.ToLower(os.Getenv("LOG_LEVEL"))
+	// Set log level from configuration
+	level := strings.ToLower(cfg.LogLevel)
 	switch level {
 	case "debug":
 		zerolog.SetGlobalLevel(zerolog.DebugLevel)
@@ -28,11 +29,6 @@ func Init() {
 	default:
 		zerolog.SetGlobalLevel(zerolog.InfoLevel)
 	}
-}
-
-func isDevelopment() bool {
-	env := strings.ToLower(os.Getenv("ENVIRONMENT"))
-	return env == "" || env == "development" || env == "dev"
 }
 
 func Logger() zerolog.Logger {

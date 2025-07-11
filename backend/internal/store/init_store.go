@@ -5,10 +5,11 @@ import (
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"github.com/viqueen/buf-template/backend/internal/config"
 )
 
-func InitStore() (*gorm.DB, error) {
-	connectionString := "postgres://todo:todo@localhost:5432/todo?sslmode=disable" //nolint: gosec
+func InitStore(cfg *config.Config) (*gorm.DB, error) {
+	connectionString := cfg.Database.ConnectionString()
 
 	db, err := gorm.Open(postgres.Open(connectionString), &gorm.Config{})
 	if err != nil {

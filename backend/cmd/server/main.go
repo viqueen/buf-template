@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -11,6 +12,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"github.com/viqueen/buf-template/api/go-sdk/todo/v1/todoV1connect"
 	apitodov1 "github.com/viqueen/buf-template/backend/internal/api-todo-v1"
+	"github.com/viqueen/buf-template/backend/internal/config"
 	"github.com/viqueen/buf-template/backend/internal/logger"
 	"github.com/viqueen/buf-template/backend/internal/store"
 	"golang.org/x/net/http2"
@@ -18,14 +20,15 @@ import (
 )
 
 func main() {
-	logger.Init()
+	cfg := config.Load()
+	logger.Init(cfg)
 
 	otelInterceptor, otelErr := otelconnect.NewInterceptor()
 	if otelErr != nil {
 		log.Fatal().Err(otelErr).Msg("failed to initialise otel interceptor")
 	}
 
-	db, dbErr := store.InitStore()
+	db, dbErr := store.InitStore(cfg)
 	if dbErr != nil {
 		log.Fatal().Err(dbErr).Msg("failed to initialise db")
 	}
@@ -43,10 +46,11 @@ func main() {
 
 	h2cMux := h2c.NewHandler(mux, &http2.Server{})
 
-	log.Info().Msg("starting server on :8080")
+	serverAddr := fmt.Sprintf(":%s", cfg.ServerPort)
+	log.Info().Str("addr", serverAddr).Msg("starting server")
 
 	srv := &http.Server{
-		Addr:         ":8080",
+		Addr:         serverAddr,
 		Handler:      withCORS(h2cMux),
 		ReadTimeout:  5 * time.Second,   //nolint: mnd
 		WriteTimeout: 10 * time.Second,  //nolint: mnd
