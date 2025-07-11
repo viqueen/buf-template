@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"net/http"
 	"time"
 
@@ -9,22 +8,26 @@ import (
 	connectcors "connectrpc.com/cors"
 	"connectrpc.com/otelconnect"
 	"github.com/rs/cors"
+	"github.com/rs/zerolog/log"
 	"github.com/viqueen/buf-template/api/go-sdk/todo/v1/todoV1connect"
 	apitodov1 "github.com/viqueen/buf-template/backend/internal/api-todo-v1"
+	"github.com/viqueen/buf-template/backend/internal/logger"
 	"github.com/viqueen/buf-template/backend/internal/store"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
 )
 
 func main() {
+	logger.Init()
+
 	otelInterceptor, otelErr := otelconnect.NewInterceptor()
 	if otelErr != nil {
-		log.Fatalf("failed to initialise otel interceptor: %v", otelErr)
+		log.Fatal().Err(otelErr).Msg("failed to initialise otel interceptor")
 	}
 
 	db, dbErr := store.InitStore()
 	if dbErr != nil {
-		log.Fatalf("failed to initialise db: %v", dbErr)
+		log.Fatal().Err(dbErr).Msg("failed to initialise db")
 	}
 
 	todoRepo := store.NewTodoRepository(db)
@@ -40,7 +43,7 @@ func main() {
 
 	h2cMux := h2c.NewHandler(mux, &http2.Server{})
 
-	log.Printf("starting server on :8080")
+	log.Info().Msg("starting server on :8080")
 
 	srv := &http.Server{
 		Addr:         ":8080",
@@ -52,7 +55,7 @@ func main() {
 
 	err := srv.ListenAndServe()
 	if err != nil {
-		log.Fatalf("failed to start server: %v", err)
+		log.Fatal().Err(err).Msg("failed to start server")
 	}
 }
 
