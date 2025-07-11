@@ -3,6 +3,7 @@
 _clean() {
   find ../api/go-sdk -name "*.go" -exec rm -f {} \;
   find ../api/web-sdk -name "*.ts" -exec rm -f {} \;
+  mkdir -p ../api/web-sdk/src
 }
 
 
