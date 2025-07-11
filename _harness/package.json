@@ -1,0 +1,16 @@
+{
+  "name": "@labset/harness",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "echo 'skipping build step for harness'",
+    "lint": "echo 'skipping lint step for harness'",
+    "start-monitoring": "docker compose -f monitoring/docker-compose.yaml up -d",
+    "stop-monitoring": "docker compose -f monitoring/docker-compose.yaml down",
+    "start-stack": "docker compose -f stack/docker-compose.yaml up -d",
+    "stop-stack": "docker compose -f stack/docker-compose.yaml down"
+  },
+  "dependencies": {
+    "@bufbuild/protobuf": "^2.6.0"
+  }
+}

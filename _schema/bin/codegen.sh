@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
 _clean() {
-  find api/go-sdk -name "*.go" -exec rm -f {} \;
-  find api/web-sdk -name "*.ts" -exec rm -f {} \;
+  find ../api/go-sdk -name "*.go" -exec rm -f {} \;
+  find ../api/web-sdk -name "*.ts" -exec rm -f {} \;
 }
 
 
 _protobuf_gen() {
   docker run --rm \
-    --volume "${PWD}/_schema":/workspace/schema \
-    --volume "${PWD}/api":/workspace/api \
+    --volume "${PWD}":/workspace/schema \
+    --volume "${PWD}/../api":/workspace/api \
     --workdir /workspace/schema \
     bufbuild/buf generate --verbose
 }
@@ -35,7 +35,7 @@ _export_module() {
 
 
 _export_ts_index() {
-  find api/web-sdk -name "*.ts" | _export_module
+  find ../api/web-sdk -name "*.ts" | _export_module
 }
 
 _clean

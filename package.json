@@ -4,11 +4,17 @@
   "author": "Hasnae R. <>",
   "license": "Apache-2.0",
   "workspaces": [
+    "_harness",
+    "_schema",
     "api/web-sdk",
+    "backend",
     "frontend"
   ],
   "scripts": {
     "claude": "claude",
+    "harness": "npm run --workspace @labset/harness",
+    "schema": "npm run --workspace @labset/schema",
+    "backend": "npm run --workspace @labset/buf-template-backend",
     "frontend:dev": "npm run dev --workspace @labset/buf-template-frontend",
     "build": "npm run build --workspaces",
     "lint": "npm run lint --workspaces",

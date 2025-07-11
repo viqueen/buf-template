@@ -1,0 +1,13 @@
+{
+  "name": "@labset/schema",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "echo 'skipping build step for schema'",
+    "lint": "echo 'skipping lint step for schema'",
+    "codegen": "./bin/codegen.sh"
+  },
+  "dependencies": {
+    "@bufbuild/protobuf": "^2.6.0"
+  }
+}
