@@ -9,7 +9,7 @@ This is a full-stack application template using Buf for API schema management, G
 ## Architecture
 
 - **Schema-first development**: Protocol Buffers definitions in `_schema/protos/` generate both Go and TypeScript SDKs
-- **Backend**: Go server using Connect RPC framework, PostgreSQL database with SQLC for type-safe queries
+- **Backend**: Go server using Connect RPC framework, PostgreSQL database with GORM for ORM
 - **Frontend**: React + TypeScript app consuming the generated web SDK
 - **Monitoring**: Prometheus + Grafana stack for observability
 - **Workspace structure**: NPM workspaces for frontend + web SDK, Go workspace for backend + Go SDK
@@ -27,18 +27,12 @@ make monitoring-up
 
 # Start database and services
 make stack-up
-
-# Run database migrations
-make migrations
 ```
 
 ### Code Generation
 ```bash
 # Generate API SDKs from protobuf schemas
 make api-codegen
-
-# Generate Go database code from SQL queries
-make sqlc-codegen
 ```
 
 ### Development Servers
@@ -48,6 +42,12 @@ make run-backend-server
 
 # Start frontend development server
 npm run frontend:dev
+
+# Start backend with hot reload (modd)
+make backend-run
+
+# Start backend in debug mode
+make backend-debug
 ```
 
 ### Build and Quality
@@ -60,6 +60,12 @@ npm run lint
 
 # Format frontend code
 npm run format
+
+# Lint Go backend with golangci-lint (Docker-based)
+make lint
+
+# Auto-fix Go linting issues
+make lint-fix
 ```
 
 ## Key Files and Directories
@@ -73,7 +79,7 @@ npm run format
 
 ## Database Integration
 
-The project uses PostgreSQL with Flyway migrations (`backend/data/schema/`) and SQLC for type-safe query generation. Database queries are defined in `backend/data/queries/` and generate Go code in `backend/internal/store/gendb/`.
+The project uses PostgreSQL with GORM for ORM. Database connection is configured via environment variables in `backend/internal/config/config.go`. The database service runs in Docker via `make stack-up`.
 
 ## API Development
 
