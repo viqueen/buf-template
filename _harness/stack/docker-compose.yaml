@@ -16,3 +16,27 @@ services:
       - "5432:5432"
     volumes:
       - ../../.local-env/database:/var/lib/postgresql/data
+
+  aws-localstack:
+    image: localstack/localstack:3.0.2
+    environment:
+      - SERVICES=dynamodb,lambda,apigateway,ssm
+    ports:
+      - "4566:4566"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "../../.local-env/localstack:/var/lib/localstack"
+    networks:
+      - "todo_network"
+
+  neo4j-graph:
+    image: neo4j:5.16.0-community
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      - NEO4J_AUTH=neo4j/password
+    volumes:
+      - "../../.local-env/neo4j:/neo4j"
+    networks:
+      - "todo_network"
