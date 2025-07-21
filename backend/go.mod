@@ -8,7 +8,7 @@ require (
 	connectrpc.com/otelconnect v0.7.2
 	github.com/gofrs/uuid v4.4.0+incompatible
 	github.com/rs/cors v1.11.1
-	github.com/viqueen/buf-template/api/go-sdk v0.0.0-00010101000000-000000000000
+	github.com/viqueen/buf-template/api/go-sdk 4f9d6f926b8d
 	golang.org/x/net v0.41.0
 	gorm.io/driver/postgres v1.5.11
 	gorm.io/gorm v1.25.12
