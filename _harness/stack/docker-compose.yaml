@@ -18,7 +18,7 @@ services:
       - ../../.local-env/database:/var/lib/postgresql/data
 
   aws-localstack:
-    image: localstack/localstack:3.0.2
+    image: localstack/localstack:4.7.0
     environment:
       - SERVICES=dynamodb,lambda,apigateway,ssm
     ports:
