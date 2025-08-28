@@ -30,7 +30,7 @@ services:
       - "todo_network"
 
   neo4j-graph:
-    image: neo4j:5.16.0-community
+    image: neo4j:2025.08.0-community
     ports:
       - "7474:7474"
       - "7687:7687"
